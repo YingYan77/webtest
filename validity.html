@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Validity Check</title>
+
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/sandstone.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.6.2/htmlwidgets.js"></script>
+<script src="site_libs/proj4js-2.3.15/proj4.js"></script>
+<link href="site_libs/highcharts-9.3.1/css/motion.css" rel="stylesheet" />
+<script src="site_libs/highcharts-9.3.1/highcharts.js"></script>
+<script src="site_libs/highcharts-9.3.1/highcharts-3d.js"></script>
+<script src="site_libs/highcharts-9.3.1/highcharts-more.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/stock.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/map.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/data.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/exporting.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/offline-exporting.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/drilldown.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/item-series.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/overlapping-datalabels.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/annotations.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/export-data.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/funnel.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/heatmap.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/treemap.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/sankey.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/dependency-wheel.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/organization.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/solid-gauge.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/streamgraph.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/sunburst.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/vector.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/wordcloud.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/xrange.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/tilemap.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/venn.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/gantt.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/timeline.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/parallel-coordinates.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/bullet.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/coloraxis.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/dumbbell.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/lollipop.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/series-label.js"></script>
+<script src="site_libs/highcharts-9.3.1/plugins/motion.js"></script>
+<script src="site_libs/highcharts-9.3.1/custom/reset.js"></script>
+<script src="site_libs/highcharts-9.3.1/modules/boost.js"></script>
+<script src="site_libs/highchart-binding-0.9.4/highchart.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">TOSCO 2.0 Coding Progress</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Overview</a>
+</li>
+<li>
+  <a href="about.html">Correction</a>
+</li>
+<li>
+  <a href="timetrack.html">Coding Over Time</a>
+</li>
+<li>
+  <a href="validity.html">Validity Check</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Validity Check</h1>
+
+</div>
+
+
+<p>Another point need to be noticed is the need for validity check
+later. This section summarize this issue.</p>
+<div id="pie-and-waterfall-chart-for-vadility-check"
+class="section level3">
+<h3>Pie and Waterfall Chart for Vadility Check</h3>
+<p>First, this is an overall view of the number of data entries that
+need vadility check. There are in total <strong>112</strong> data points
+need validity check, which account for <strong>8.7%</strong> of coded
+data, excluding the correction data. They are distributed quite evenly
+over years, similar to those data that do not need validity check. This
+indicates that most companies continue operating until now.</p>
+<div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-01da0fe8cafdaec899c3" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-01da0fe8cafdaec899c3">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":"Number of Data Entries that Need Validity Check"},"yAxis":{"title":{"text":null}},"credits":{"enabled":true,"text":"Data Source: \n             tosco2.0_updating.csv","style":{"fontSize":"10px"}},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":true,"pointFormat":"{point.y}%"},"treemap":{"layoutAlgorithm":"squarified"},"pie":{"center":["20%","20%"],"colors":["#8EAABC","#163A5F"],"showInLegend":false,"size":120,"dataLabels":{"enabled":true},"tooltip":{"pointFormat":"{series.name}: {point.freq:.1f}% ({point.n})"}}},"series":[{"name":"No","data":[{"year":2020,"validity_check_needed":"No","n":393,"x":2020,"y":393},{"year":2021,"validity_check_needed":"No","n":389,"x":2021,"y":389},{"year":2022,"validity_check_needed":"No","n":388,"x":2022,"y":388}],"type":"waterfall"},{"name":"Yes","data":[{"year":2020,"validity_check_needed":"Yes","n":47,"x":2020,"y":47},{"year":2021,"validity_check_needed":"Yes","n":34,"x":2021,"y":34},{"year":2022,"validity_check_needed":"Yes","n":31,"x":2022,"y":31}],"type":"waterfall"},{"group":"group","data":[{"validity_check_needed":"No","n":1170,"freq":91.3,"y":1170,"name":"No"},{"validity_check_needed":"Yes","n":112,"freq":8.7,"y":112,"name":"Yes"}],"type":"pie","name":"Aggregated pie"}],"colors":["#8EAABC","#163A5F"],"subtitle":{"text":"The Pie chart shows an aggregated ratio of data that need validity check, and \n    the waterfall shows details over year 2020, 2021 and 2022."}},"theme":{"chart":{"backgroundColor":"transparent"},"colors":["#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="companies-and-countries-for-vadility-check"
+class="section level3">
+<h3>Companies and countries for Vadility Check</h3>
+<p>Last but not least, here is a visualization of all those companies
+that contains data need validity check, grouped by corresponding
+countries. The size of the bubble is decided by the number of
+validity-check-needed data pointed in each company and country.
+Apparently, the information about telecom companies in
+<strong>Somalia</strong>, <strong>Nigeria</strong> and
+<strong>Swaziland</strong> are the most difficult to find out and check
+from the Internet.</p>
+<div class="highchart html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-0640a2487c0feb24406e" style="width:672px;height:480px;"></div>
+<script type="application/json" data-for="htmlwidget-0640a2487c0feb24406e">{"x":{"hc_opts":{"chart":{"reflow":true},"title":{"text":"ISP Companies That Need Validity Check"},"yAxis":{"title":{"text":[]}},"credits":{"enabled":true,"text":"Data Source: \n             tosco2.0_updating.csv","style":{"fontSize":"10px"}},"exporting":{"enabled":false},"boost":{"enabled":false},"plotOptions":{"series":{"label":{"enabled":false},"turboThreshold":0,"showInLegend":true},"treemap":{"layoutAlgorithm":"squarified"},"scatter":{"marker":{"symbol":"circle"}},"packedbubble":{"maxSize":"75%","zMin":0,"layoutAlgorithm":{"gravitationalConstant":0.05,"splitSeries":true,"seriesInteraction":true,"dragBetweenSeries":true,"parentNodeLimit":true},"dataLabels":{"enabled":true,"format":"{point.name}","style":{"color":"black","textOutline":"none","fontWeight":"normal"}},"series":{"showInLegend":false,"pointFormat":"{point.y}%"}}},"series":[{"name":"Algeria","data":[{"country":"Algeria","company_id":"ALG2","need_validity_check":2,"name":"ALG2","value":2}],"type":"packedbubble"},{"name":"Angola","data":[{"country":"Angola","company_id":"ANG1","need_validity_check":1,"name":"ANG1","value":1}],"type":"packedbubble"},{"name":"Benin","data":[{"country":"Benin","company_id":"BEN1","need_validity_check":3,"name":"BEN1","value":3},{"country":"Benin","company_id":"BEN4","need_validity_check":1,"name":"BEN4","value":1}],"type":"packedbubble"},{"name":"Burundi","data":[{"country":"Burundi","company_id":"BUI1","need_validity_check":3,"name":"BUI1","value":3},{"country":"Burundi","company_id":"BUI7","need_validity_check":4,"name":"BUI7","value":4}],"type":"packedbubble"},{"name":"Central African Republic","data":[{"country":"Central African Republic","company_id":"CAR4","need_validity_check":3,"name":"CAR4","value":3}],"type":"packedbubble"},{"name":"Congo Kinshasa","data":[{"country":"Congo Kinshasa","company_id":"DRC1","need_validity_check":6,"name":"DRC1","value":6}],"type":"packedbubble"},{"name":"Egypt","data":[{"country":"Egypt","company_id":"EGY1","need_validity_check":3,"name":"EGY1","value":3}],"type":"packedbubble"},{"name":"Equatorial Guinea","data":[{"country":"Equatorial Guinea","company_id":"EQG1","need_validity_check":6,"name":"EQG1","value":6}],"type":"packedbubble"},{"name":"Gambia","data":[{"country":"Gambia","company_id":"GAM1","need_validity_check":6,"name":"GAM1","value":6}],"type":"packedbubble"},{"name":"Ivory Coast","data":[{"country":"Ivory Coast","company_id":"CDI6","need_validity_check":3,"name":"CDI6","value":3}],"type":"packedbubble"},{"name":"Niger","data":[{"country":"Niger","company_id":"NIR1","need_validity_check":3,"name":"NIR1","value":3}],"type":"packedbubble"},{"name":"Nigeria","data":[{"country":"Nigeria","company_id":"NIG1","need_validity_check":3,"name":"NIG1","value":3},{"country":"Nigeria","company_id":"NIG2","need_validity_check":3,"name":"NIG2","value":3},{"country":"Nigeria","company_id":"NIG6","need_validity_check":6,"name":"NIG6","value":6}],"type":"packedbubble"},{"name":"Rwanda","data":[{"country":"Rwanda","company_id":"RWA2","need_validity_check":6,"name":"RWA2","value":6}],"type":"packedbubble"},{"name":"Senegal","data":[{"country":"Senegal","company_id":"SEN3","need_validity_check":2,"name":"SEN3","value":2}],"type":"packedbubble"},{"name":"Sierra Leone","data":[{"country":"Sierra Leone","company_id":"SIE1","need_validity_check":6,"name":"SIE1","value":6}],"type":"packedbubble"},{"name":"Somalia","data":[{"country":"Somalia","company_id":"SOM1","need_validity_check":3,"name":"SOM1","value":3},{"country":"Somalia","company_id":"SOM2","need_validity_check":6,"name":"SOM2","value":6},{"country":"Somalia","company_id":"SOM8","need_validity_check":6,"name":"SOM8","value":6}],"type":"packedbubble"},{"name":"South Africa","data":[{"country":"South Africa","company_id":"SAF3","need_validity_check":1,"name":"SAF3","value":1},{"country":"South Africa","company_id":"SAF4","need_validity_check":3,"name":"SAF4","value":3}],"type":"packedbubble"},{"name":"Swaziland","data":[{"country":"Swaziland","company_id":"SWA3","need_validity_check":13,"name":"SWA3","value":13}],"type":"packedbubble"},{"name":"Uganda","data":[{"country":"Uganda","company_id":"UGA1","need_validity_check":3,"name":"UGA1","value":3},{"country":"Uganda","company_id":"UGA3","need_validity_check":3,"name":"UGA3","value":3},{"country":"Uganda","company_id":"UGA4","need_validity_check":1,"name":"UGA4","value":1}],"type":"packedbubble"},{"name":"Zambia","data":[{"country":"Zambia","company_id":"ZAM2","need_validity_check":3,"name":"ZAM2","value":3}],"type":"packedbubble"}],"xAxis":{"type":null,"title":{"text":[]},"categories":null},"tooltip":{"useHTML":true,"pointFormat":"<b>{point.name}:<\/b> {point.value}"},"subtitle":{"text":"This bubble chart groups rows that need validity check by company and country, \n    which helps us to identify the countries or companies of most concern."}},"theme":{"chart":{"backgroundColor":"transparent"},"colors":["#7cb5ec","#434348","#90ed7d","#f7a35c","#8085e9","#f15c80","#e4d354","#2b908f","#f45b5b","#91e8e1"]},"conf_opts":{"global":{"Date":null,"VMLRadialGradientURL":"http =//code.highcharts.com/list(version)/gfx/vml-radial-gradient.png","canvasToolsURL":"http =//code.highcharts.com/list(version)/modules/canvas-tools.js","getTimezoneOffset":null,"timezoneOffset":0,"useUTC":true},"lang":{"contextButtonTitle":"Chart context menu","decimalPoint":".","downloadCSV":"Download CSV","downloadJPEG":"Download JPEG image","downloadPDF":"Download PDF document","downloadPNG":"Download PNG image","downloadSVG":"Download SVG vector image","downloadXLS":"Download XLS","drillUpText":"◁ Back to {series.name}","exitFullscreen":"Exit from full screen","exportData":{"annotationHeader":"Annotations","categoryDatetimeHeader":"DateTime","categoryHeader":"Category"},"hideData":"Hide data table","invalidDate":null,"loading":"Loading...","months":["January","February","March","April","May","June","July","August","September","October","November","December"],"noData":"No data to display","numericSymbolMagnitude":1000,"numericSymbols":["k","M","G","T","P","E"],"printChart":"Print chart","resetZoom":"Reset zoom","resetZoomTitle":"Reset zoom level 1:1","shortMonths":["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],"shortWeekdays":["Sat","Sun","Mon","Tue","Wed","Thu","Fri"],"thousandsSep":" ","viewData":"View data table","viewFullscreen":"View in full screen","weekdays":["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]}},"type":"chart","fonts":[],"debug":false},"evals":[],"jsHooks":[]}</script>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
