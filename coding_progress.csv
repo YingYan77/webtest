@@ -1,0 +1,199 @@
+﻿country,cc,company_id,coder_name
+Algeria,ALG,ALG1,Tobias
+Algeria,ALG,ALG2,Tobias
+Algeria,ALG,ALG3,Tobias
+Angola,ANG,ANG1,Tobias
+Angola,ANG,ANG2,Tobias
+Angola,ANG,ANG3,Tobias
+Benin,BEN,BEN1,Livia
+Benin,BEN,BEN2,Ceased
+Benin,BEN,BEN3,Ceased
+Benin,BEN,BEN4,Livia
+Benin,BEN,BEN5,Livia
+Botswana,BOT,BOT1,Moana
+Botswana,BOT,BOT2,Moana
+Botswana,BOT,BOT3,NA
+Burkina Faso,BFO,BFO1,Alessandro
+Burkina Faso,BFO,BFO2,Alessandro
+Burkina Faso,BFO,BFO3,Alessandro
+Burundi,BUI,BUI1,Tobias
+Burundi,BUI,BUI2,Ceased
+Burundi,BUI,BUI3,Tobias
+Burundi,BUI,BUI4,Ceased
+Burundi,BUI,BUI5,Tobias
+Burundi,BUI,BUI6,Ceased
+Burundi,BUI,BUI7,Tobias
+Cameroon,CAO,CAO1,Tobias
+Cameroon,CAO,CAO2,Tobias
+Cameroon,CAO,CAO3,Tobias
+Cameroon,CAO,CAO4,Tobias
+Central African Republic,CEN,CEN1,Ceased
+Central African Republic,CEN,CEN2,Tobias
+Central African Republic,CEN,CEN3,Tobias
+Central African Republic,CEN,CEN4,Tobias
+Central African Republic,CEN,CEN5,Tobias
+Chad,CHA,CHA1,Vera
+Chad,CHA,CHA2,NA
+Chad,CHA,CHA3,NA
+Chad,CHA,CHA4,NA
+Congo Brazzaville,CON,CON1,Ying
+Congo Brazzaville,CON,CON2,Ying
+Congo Brazzaville,CON,CON3,Ying
+Congo Brazzaville,CON,CON4,Ying
+Congo Brazzaville,CON,CON5,Ceased
+Congo Kinshasa,DRC,DRC1,Ying
+Congo Kinshasa,DRC,DRC2,Ying
+Congo Kinshasa,DRC,DRC3,Ying
+Congo Kinshasa,DRC,DRC4,Ying
+Congo Kinshasa,DRC,DRC5,Ceased
+Congo Kinshasa,DRC,DRC6,Ying
+Congo Kinshasa,DRC,DRC7,Ying
+Djibouti,DJI,DJI1,Tobias
+Egypt,EGY,EGY1,Vera
+Egypt,EGY,EGY2,Vera
+Egypt,EGY,EGY3,Vera
+Egypt,EGY,EGY4,Vera
+Equatorial Guinea,EQG,EQG1,Tobias
+Equatorial Guinea,EQG,EQG2,Tobias
+Equatorial Guinea,EQG,EQG3,Tobias
+Eritrea,ERI,ERI1,Alessandro
+Ethiopia,ETH,ETH1,Alessandro
+Ethiopia,ETH,ETH2,Alessandro
+Gabon,GAB,GAB1,Alessandro
+Gabon,GAB,GAB2,Alessandro
+Gabon,GAB,GAB3,Alessandro
+Gabon,GAB,GAB4,Alessandro
+Gambia,GAM,GAM1,Ying
+Gambia,GAM,GAM2,Ying
+Gambia,GAM,GAM3,Ying
+Gambia,GAM,GAM4,Ying
+Ghana,GHA,GHA1,Ying
+Ghana,GHA,GHA3,Ying
+Ghana,GHA,GHA4,Ying
+Ghana,GHA,GHA5,Ceased
+Ghana,GHA,GHA6,Ying
+Guinea,GUI,GUI1,Vera
+Guinea,GUI,GUI2,NA
+Guinea,GUI,GUI3,Ceased
+Guinea,GUI,GUI4,Vera
+Guinea,GUI,GUI5,Ceased
+Guinea-Bissau,GNB,GNB1,Alessandro
+Guinea-Bissau,GNB,GNB2,Alessandro
+Guinea-Bissau,GNB,GNB3,Alessandro
+Ivory Coast,CDI,CDI1,Ceased
+Ivory Coast,CDI,CDI2,Ceased
+Ivory Coast,CDI,CDI3,Ceased
+Ivory Coast,CDI,CDI4,Ceased
+Ivory Coast,CDI,CDI5,Vera
+Ivory Coast,CDI,CDI6,Vera
+Ivory Coast,CDI,CDI7,Vera
+Ivory Coast,CDI,CDI9,Ceased
+Kenya,KEN,KEN1,Ying
+Kenya,KEN,KEN2,Ying
+Kenya,KEN,KEN3,Ying
+Kenya,KEN,KEN4,Ceased
+Lesotho,LES,LES1,NA
+Lesotho,LES,LES2,NA
+Liberia,LBR,LBR1,Ying
+Liberia,LBR,LBR2,Ying
+Liberia,LBR,LBR3,Ying
+Liberia,LBR,LBR4,Ying
+Liberia,LBR,LBR5,Ying
+Libya,LIB,LIB1,Vera
+Libya,LIB,LIB2,Vera
+Libya,LIB,LIB3,Vera
+Libya,LIB,LIB4,Vera
+Madagascar,MAG,MAG1,Ying
+Madagascar,MAG,MAG2,Ying
+Madagascar,MAG,MAG3,Ying
+Malawi,MAW,MAW1,Ying
+Malawi,MAW,MAW2,Ying
+Malawi,MAW,MAW3,Ying
+Mali,MLI,MLI1,NA
+Mali,MLI,MLI2,NA
+Mali,MLI,MLI3,NA
+Mauritania,MAA,MAA1,Alessandro
+Mauritania,MAA,MAA2,Alessandro
+Mauritania,MAA,MAA3,Alessandro
+Mauritania,MAA,MAA4,Alessandro
+Morocco,MOR,MOR1,Vera
+Morocco,MOR,MOR2,Vera
+Morocco,MOR,MOR3,Vera
+Mozambique,MZM,MZM1,Alessandro
+Mozambique,MZM,MZM2,Alessandro
+Mozambique,MZM,MZM3,Ceased
+Mozambique,MZM,MZM4,Alessandro
+Namibia,NAM,NAM1,NA
+Namibia,NAM,NAM2,Vera
+Namibia,NAM,NAM4,Vera
+Niger,NIR,NIR1,Vera
+Niger,NIR,NIR2,Vera
+Niger,NIR,NIR3,Vera
+Niger,NIR,NIR4,Vera
+Nigeria,NIG,NIG1,Livia
+Nigeria,NIG,NIG2,Livia
+Nigeria,NIG,NIG3,Livia
+Nigeria,NIG,NIG5,Livia
+Nigeria,NIG,NIG6,Livia
+Rwanda,RWA,RWA1,NA
+Rwanda,RWA,RWA2,Moana
+Rwanda,RWA,RWA3,Ceased
+Rwanda,RWA,RWA4,Moana
+Senegal,SEN,SEN1,Livia
+Senegal,SEN,SEN2,Livia
+Senegal,SEN,SEN3,Livia
+Sierra Leone,SIE,SIE1,Ying
+Sierra Leone,SIE,SIE2,Ying
+Sierra Leone,SIE,SIE3,Ying
+Sierra Leone,SIE,SIE4,Ceased
+Sierra Leone,SIE,SIE5,Ceased
+Sierra Leone,SIE,SIE6,Ceased
+Sierra Leone,SIE,SIE7,Ying
+Somalia,SOM,SOM1,Vera
+Somalia,SOM,SOM2,Vera
+Somalia,SOM,SOM3,NA
+Somalia,SOM,SOM5,NA
+Somalia,SOM,SOM6,NA
+Somalia,SOM,SOM7,NA
+Somalia,SOM,SOM8,Vera
+South Africa,SAF,SAF1,Ying
+South Africa,SAF,SAF2,Moana
+South Africa,SAF,SAF3,Moana
+South Africa,SAF,SAF4,Ying
+South Sudan,SSD,SSD1,NA
+South Sudan,SSD,SSD2,NA
+South Sudan,SSD,SSD3,NA
+South Sudan,SSD,SSD4,Vera
+South Sudan,SSD,SSD5,NA
+Sudan,SSD,SSD2,NA
+Sudan,SSD,SSD3,NA
+Sudan,SSD,SSD4,Vera
+Swaziland,SWA,SWA1,Ying
+Swaziland,SWA,SWA2,Ying
+Swaziland,SWA,SWA3,Ying
+Tanzania,TAZ,TAZ1,Ying
+Tanzania,TAZ,TAZ2,Ying
+Tanzania,TAZ,TAZ3,Ying
+Tanzania,TAZ,TAZ4,Ying
+Tanzania,TAZ,TAZ5,Ying
+Tanzania,TAZ,TAZ6,Ceased
+Tanzania,TAZ,TAZ7,Ceased
+Tanzania,TAZ,TAZ8,Ceased
+Togo,TOG,TOG1,NA
+Togo,TOG,TOG2,NA
+Tunisia,TUN,TUN1,Ying
+Tunisia,TUN,TUN2,Ying
+Tunisia,TUN,TUN3,Ying
+Uganda,UGA,UGA1,Ying
+Uganda,UGA,UGA2,Ying
+Uganda,UGA,UGA3,Moana
+Uganda,UGA,UGA4,Moana
+Uganda,UGA,UGA5,Ceased
+Uganda,UGA,UGA6,Moana
+Uganda,UGA,UGA7,Ceased
+Zambia,ZAM,ZAM1,Ying
+Zambia,ZAM,ZAM2,Moana
+Zambia,ZAM,ZAM3,Moana
+Zimbabwe,ZIM,ZIM1,Alessandro
+Zimbabwe,ZIM,ZIM2,Alessandro
+Zimbabwe,ZIM,ZIM3,Alessandro
