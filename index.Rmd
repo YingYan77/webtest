@@ -1,0 +1,140 @@
+
+---
+title: "TOSCO2.0 Coding Progress Analysis"
+author: "Ying Yan"
+date: "Last update: 2023-10-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(sf)
+library(wbstats)
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(lubridate)
+library(highcharter) 
+```
+
+```{r load data, echo=FALSE}
+## empty memory (!)
+rm(list=ls())
+
+## read data
+tosco2 <- read.csv("tosco2_updating.csv")
+progress <- read.csv("coding_progress.csv")
+```
+
+This page contains several graphs describing current TOSCO2.0 coding progress, aiming to showing current coding stage and enhancing coding efficiency. The data in use is [tosco2 updating data file](https://github.com/SeraphineM/tosco/blob/main/tosco-updating/tosco2_updating.csv) and ISP company allocation table on the [Github landing page](https://github.com/SeraphineM/tosco/blob/main/tosco%20coding/README.md). 
+
+## Aggregated Progress Overview
+
+Two graphs below provides an overview of current coding progress in the unit of ISP company. 
+
+```{r Create the coding progress variable, echo=FALSE, message=FALSE, warning=FALSE}
+## classify the coding progress of each company
+company_id <- unique(tosco2[nchar(as.character(tosco2$company_id))==4,]$company_id)
+status <- rep("coded", length(company_id))
+company_coded <- as.data.frame(cbind(company_id, status))
+
+progress_status <- left_join(progress, company_coded, by="company_id") %>% 
+  mutate(code_status = case_when(
+    coder_name == "Ceased" ~ "Coded", 
+    status == "coded" ~ "Coded", 
+    !is.na(coder_name) & is.na(status) ~ "Coding", 
+    is.na(coder_name) & is.na(status) ~ "To be code"))
+
+progress_status$code_status[5] <- "Coded"
+
+```
+
+### Overview
+In total there are 197 ISP companies in the coding list at the [landing page](https://github.com/SeraphineM/tosco/blob/main/tosco%20coding/README.md), which need to be checked for any updates. The following pie chart shows below information:
+
+- Up to 11 September, **78.8%** (156 out of 198) of those companies have been either coded or checked as ceased. 
+- **9.1%** (i.e. 18) of companies have been taken by a coder but its corresponding data haven't been updated in the tosco2_updating file. 
+- This left 24 companies (**12.1%**) waited to be code. 
+
+```{r Aggregated Pie Chart, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+## coding progress grouping
+agg_progress <- progress_status %>% group_by(code_status) %>% 
+  summarise(n=n()) %>% 
+  mutate(freq = round(n / sum(n), 3)*100)
+
+## draw the pie chart of coding progress
+agg_progress %>%
+  hchart(
+    "pie", hcaes(x = code_status, y = n),
+    name = "Coding Status") %>% 
+  hc_colors(c("#8C7527", "#D7A207", "#E5E2D5")) %>% 
+  hc_plotOptions(pie = list(
+    dataLabels = list(enabled = TRUE), 
+    tooltip = list(pointFormat = "{series.name}: {point.freq:.1f}% ({point.n})"))) %>% 
+  hc_title(
+    text = "Aggregated Coding Progress (based on ISPs)"
+  ) %>%
+  hc_subtitle(
+    text = "This pie chart shows 74.6% of total ISP comapnies has been coded, and 
+    55 companies still need to be coded later on."
+  ) %>%
+  hc_credits(enabled = TRUE, 
+             text = "Data Source: TOSCO Landing Page Company Allocation Table",
+             style = list(fontSize = "10px"))
+
+```
+
+### By country
+
+This map shows the completeness regarding the coding level of each country's ISP company in percentage. 100% means that all ISP companies in this country has been coded, whereas 0% means that none of the ISP companies in this country has been coded. 
+
+The bracket in the tooltip also shows the total number of ISP companies in a certain country, and how many companies there has been coded so far. 
+
+```{r Map the coding progress, echo=FALSE, message=FALSE, warning=FALSE}
+## change the name to match the dataset
+progress_status$country <- gsub("Congo Kinshasa", "Democratic Republic of the Congo", progress_status$country)
+progress_status$country <- gsub("Congo Brazzaville", "Republic of Congo", progress_status$country)
+progress_status$country <- gsub("Tanzania", "United Republic of Tanzania", progress_status$country)
+progress_status$country <- gsub("Guinea-Bissau", "Guinea Bissau", progress_status$country)
+
+## create the country-based progress percentage variable
+all_ISP <- progress_status %>% group_by(country) %>% summarise(total_number=n()) 
+done_ISP <- progress_status %>% 
+  filter(code_status=="Coded") %>% 
+  group_by(country) %>% 
+  summarise(finished = n())
+
+progress_pert <- left_join(all_ISP, done_ISP, by="country") %>% 
+  mutate(ratio = ifelse(is.na(finished), 0, round((finished / total_number)*100, 3)))
+
+## draw the map
+hcmap(
+  map = "custom/africa", 
+  showInLegend = FALSE, 
+  data = progress_pert, 
+  joinBy = c("name","country"),
+  name = "Progress status",
+  value = "ratio",
+  tooltip = list(pointFormat = "{point.name} {point.value:.2f}% ({point.finished}/{point.total_number})"),
+  dataLabels = list(enabled = TRUE, format = "{point.country}")
+) |>
+  hc_title(text = "Coding Progress by Country (%)") |> 
+  hc_colorAxis(
+    minColor = "#E5E2D5",
+    maxColor = "#8C7527"
+  ) |> 
+  hc_mapNavigation(enabled = TRUE) |>
+  hc_size(width = 900, height = 600) |>
+  hc_subtitle(
+    text = "This map shows the percentage of coding completness by country. The 
+    darker the shades, the more companies have been coded in that country."
+  ) |>
+  hc_credits(enabled = TRUE, 
+             text = "Data Source: TOSCO Landing Page Company Allocation Table;\n
+             tosco2.0_updating.csv",
+             style = list(fontSize = "10px"))
+
+
+```
+

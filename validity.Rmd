@@ -1,0 +1,173 @@
+---
+title: "Validity Check"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(sf)
+library(wbstats)
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(lubridate)
+library(highcharter) 
+```
+
+```{r load data, echo=FALSE}
+## empty memory (!)
+rm(list=ls())
+
+## read data
+tosco2 <- read.csv("tosco2_updating.csv")
+progress <- read.csv("coding_progress.csv")
+```
+
+
+Another point need to be noticed is the need for validity check later. This section summarize this issue. 
+
+```{r clean the variable, echo=FALSE, message=FALSE, warning=FALSE}
+tosco2 <- tosco2 %>% rename("validity_check" = "Based.on.your.coding.experience.for.this.particular.year.of.the.ISP.company..is.a.validity.check.more.needed.than.elsewhere.")
+
+tosco2 <- tosco2 %>% mutate(validity_check_needed = case_when(
+  startsWith(validity_check, "Yes") ~ "Yes",
+  startsWith(validity_check, "YES") ~ "Yes",
+  startsWith(validity_check, "yes") ~ "Yes",
+  startsWith(validity_check, "No") ~ "No",
+  startsWith(validity_check, "no") ~ "No"
+))
+
+tosco2$validity_check_needed[is.na(tosco2$validity_check_needed)] = "No"
+
+# Clean the name bug
+tosco2$company_id <- ifelse(tosco2$company_id=="Etisalat Egypt", "EGY1", tosco2$company_id)
+
+```
+
+### Pie and Waterfall Chart for Vadility Check
+First, this is an overall view of the number of data entries that need vadility check. There are in total **112** data points need validity check, which account for **8.7%** of coded data, excluding the correction data. They are distributed quite evenly over years, similar to those data that do not need validity check. This indicates that most companies continue operating until now.
+
+```{r the validity summary, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+validity_check_table <- tosco2 %>% 
+  filter(!grepl('correct', company_id)) %>%
+  group_by(validity_check_needed) %>% 
+  summarise(n=n()) %>% mutate(freq = round(n / sum(n), 3)*100)
+
+validity_check <- tosco2 %>% 
+  filter(!grepl('correct', company_id)) %>%
+  group_by(year, validity_check_needed) %>% 
+  summarise(n=n())
+
+## combine two charts
+highchart() |>  
+  hc_add_series(
+    validity_check, 
+    "waterfall",
+    hcaes(
+      x = year,
+      y = n, 
+      group = validity_check_needed
+    )
+    #name = "Validity Check"
+  ) |>   
+  hc_add_series(
+    validity_check_table,
+    "pie",
+    hcaes(
+      x = validity_check_needed, 
+      y = n
+    ), 
+    name = "Aggregated pie") |>   
+  hc_plotOptions(
+    series = list(
+      showInLegend = TRUE,
+      pointFormat = "{point.y}%"
+      #colorByPoint = FALSE
+    ),
+    pie = list(
+      center = c('20%', '20%'),
+      colors = c("#8EAABC", "#163A5F"),
+      showInLegend = FALSE,
+      size = 120,
+      dataLabels = list(enabled = TRUE), 
+      tooltip = list(pointFormat = "{series.name}: {point.freq:.1f}% ({point.n})")
+    )) |>  
+  hc_colors(c("#8EAABC", "#163A5F")) |>
+  hc_title(
+    text = "Number of Data Entries that Need Validity Check"
+  ) |> 
+    hc_subtitle(
+    text = "The Pie chart shows an aggregated ratio of data that need validity check, and 
+    the waterfall shows details over year 2020, 2021 and 2022."
+  ) |>
+  hc_credits(enabled = TRUE, 
+             text = "Data Source: 
+             tosco2.0_updating.csv",
+             style = list(fontSize = "10px"))
+
+
+```
+
+### Companies and countries for Vadility Check
+Last but not least, here is a visualization of all those companies that contains data need validity check, grouped by corresponding countries. The size of the bubble is decided by the number of validity-check-needed data pointed in each company and country. Apparently, the information about telecom companies in **Somalia**, **Nigeria** and **Swaziland** are the most difficult to find out and check from the Internet. 
+
+```{r the validity companies, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+## create the bubble data
+validity_check_list <- tosco2 %>% 
+  filter(!grepl('correct', company_id)) %>%
+  filter(validity_check_needed == "Yes") %>% 
+  group_by(country, company_id) %>% 
+  summarise(need_validity_check=n())
+
+## plot
+validity_check_list %>% 
+  hchart("packedbubble", 
+         hcaes(name = "company_id", 
+               value = "need_validity_check", 
+               group = "country")) %>% 
+  hc_tooltip(
+    useHTML = TRUE,
+    pointFormat = "<b>{point.name}:</b> {point.value}"
+  ) %>% 
+  hc_plotOptions(
+    packedbubble = list(
+      maxSize = "75%",
+      zMin = 0,
+      layoutAlgorithm = list(
+        gravitationalConstant =  0.05,
+        splitSeries =  TRUE, # TRUE to group points
+        seriesInteraction = TRUE,
+        dragBetweenSeries = TRUE,
+        parentNodeLimit = TRUE
+      ),
+      dataLabels = list(
+        enabled = TRUE,
+        format = "{point.name}",
+        style = list(
+          color = "black",
+          textOutline = "none",
+          fontWeight = "normal"
+        )
+      ), 
+      series = list(
+        showInLegend = FALSE,
+        pointFormat = "{point.y}%"
+      )
+    )
+  ) %>%
+  hc_title(
+    text = "ISP Companies That Need Validity Check"
+  ) %>%
+    hc_subtitle(
+    text = "This bubble chart groups rows that need validity check by company and country, 
+    which helps us to identify the countries or companies of most concern."
+  ) %>%
+  hc_credits(enabled = TRUE, 
+             text = "Data Source: 
+             tosco2.0_updating.csv",
+             style = list(fontSize = "10px"))
+
+
+```
+

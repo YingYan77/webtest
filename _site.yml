@@ -1,0 +1,15 @@
+name: "TOSCO 2.0 Current Coding Progress Overview"
+navbar:
+  title: "TOSCO 2.0 Coding Progress"
+  left:
+    - text: "Overview"
+      href: index.html
+    - text: "Correction"
+      href: about.html
+    - text: "Coding Over Time"
+      href: timetrack.html
+    - text: "Validity Check"
+      href: validity.html
+output:
+  html_document:
+    theme: sandstone

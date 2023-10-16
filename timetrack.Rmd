@@ -1,0 +1,110 @@
+---
+title: "Coding Progress Over Time"
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(sf)
+library(wbstats)
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(lubridate)
+library(highcharter) 
+```
+
+```{r load data, echo=FALSE}
+## empty memory (!)
+rm(list=ls())
+
+## read data
+tosco2 <- read.csv("tosco2_updating.csv")
+progress <- read.csv("coding_progress.csv")
+```
+
+
+Following bar chart shows the break-down summary of number of data entries has been coded each month, grouped by coder and excluding corrected data. Note each ISP company may have multiple data entries for a given year. 
+
+**July**, **May** and **August** have the highest volume of data entry (more than 200 entries each). 
+
+```{r date data clean, echo=FALSE, warning=FALSE}
+# Function to convert date strings with timestamps
+convert_with_timestamp <- function(date_str) {
+  parsed_date <- dmy_hms(date_str, truncated = 1)
+  formatted_date <- format(parsed_date, "%Y-%m-%d")
+  return(formatted_date)
+}
+
+# Function to convert date strings without timestamps
+convert_without_timestamp <- function(date_str) {
+  if (grepl("/", date_str)) {
+    parsed_date <- dmy(date_str, truncated = 1)
+  } else {
+    parsed_date <- dmy(date_str, truncated = 1)
+  }
+  formatted_date <- format(parsed_date, "%Y-%m-%d")
+  return(formatted_date)
+}
+
+# Function to convert Excel serial numbers to date
+convert_excel_serial <- function(serial_number) {
+  converted_date <- as.Date("1900-01-01") + serial_number - 1
+  formatted_date <- format(converted_date, "%Y-%m-%d")
+  return(formatted_date)
+}
+
+# Apply the appropriate conversion function based on date format type
+tosco2$date_column_formatted <- sapply(tosco2$Zeitstempel, function(date_str) {
+  if (grepl("\\d{2}:\\d{2}:\\d{2}", date_str)) {
+    convert_with_timestamp(date_str)
+  } else if (grepl("\\d{5}", date_str)) {
+    convert_excel_serial(as.numeric(date_str))
+  } else {
+    convert_without_timestamp(date_str)
+  }
+}) #now we should get a uniform date format
+
+tosco2 <- tosco2 %>% rename("coder_name" = "Please.indicate.your.first.name")
+
+# Clean a NA date
+tosco2$date_column_formatted <- ifelse(is.na(tosco2$date_column_formatted), format(as.Date("2023-07-15"), "%Y-%m-%d"), tosco2$date_column_formatted)
+tosco2$coder_name <- ifelse(tosco2$coder_name==2021, "Vera", tosco2$coder_name)
+tosco2$company_id <- ifelse(tosco2$company_id=="Etisalat Egypt", "EGY1", tosco2$company_id)
+```
+
+
+```{r get new dataset, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+# Reformat and add the month column
+tosco2$date_column_formatted <- ymd(tosco2$date_column_formatted)
+tosco2$month <- month(ymd(tosco2$date_column_formatted))
+
+timeseries <- tosco2 %>% 
+  filter(!grepl('correct', company_id)) %>% 
+  group_by(month, coder_name) %>% 
+  summarise(n=n())
+
+month_name <- c("Dec","Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct")
+
+timeseries %>% arrange(desc(month)) %>% hchart(
+  'column', hcaes(x = 'month', y = 'n', group = 'coder_name'), 
+  stacking = "normal"
+) %>% hc_yAxis(
+  title = list(text = "Data entries")
+) %>% hc_xAxis(
+  title = list(text = "Month"), 
+  categories = month_name
+) %>%
+  hc_title(
+    text = "Number of Data Entries Coded per Month and Coder"
+) %>%
+  hc_subtitle(
+    text = "Following bar chart shows the break-down summary of number of data entries has been coded each month, grouped by coder and excluding corrected data. In May, July and August, more than 200 data entires have been coded."
+  ) %>%
+  hc_credits(enabled = TRUE, 
+             text = "Data Source: 
+             tosco2.0_updating.csv",
+             style = list(fontSize = "10px"))
+
+```

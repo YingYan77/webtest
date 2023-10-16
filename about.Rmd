@@ -1,0 +1,72 @@
+---
+title: "Correction Required"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(sf)
+library(wbstats)
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(lubridate)
+library(highcharter) 
+```
+
+```{r load data, echo=FALSE}
+## empty memory (!)
+rm(list=ls())
+
+## read data
+tosco2 <- read.csv("tosco2_updating.csv")
+progress <- read.csv("coding_progress.csv")
+```
+
+
+This Bar chart gives a summary of the number of data points that need to be corrected later on, which is marked as "company_id" plus '_correct' when we use the Google form to collect data. 
+
+- Currently there are **28** observations that need to be overwritten by its corrected-version in tosco2 updating dataset. 
+- So far we've coded **1,282** rows, ignoring the additional correction rows. 
+
+```{r Correction bar chart, echo=FALSE, message=FALSE, warning=FALSE, fig.align='center'}
+correct <- grep("_correct$|-correct$", tosco2$company_id, value = TRUE)
+
+correct <- unique(substr(correct, 0, 4))
+
+tosco2 <- tosco2 %>% mutate(correct_needed = case_when(
+  str_detect(company_id, "_correct") ~ "Yes", 
+  str_detect(company_id, "-correct") ~ "Yes"))
+
+tosco2$correct_needed[is.na(tosco2$correct_needed)] = "No"
+
+correct_needed <- tosco2 %>% group_by(correct_needed) %>% 
+  summarise(n=n()) %>% mutate(freq = round(n / sum(n), 3))
+
+correct_needed$correct_needed[1] = "Total number of observations coded"
+correct_needed$correct_needed[2] = "Number of observations that need a correction"
+
+correct_needed %>% hchart(type = "bar",
+                          hcaes(x = correct_needed, y = n), 
+                          name = "Number of Observation") %>%
+  hc_colors(c("#AFB0B2", "#110F14")) %>% 
+  hc_plotOptions(
+    bar = list(
+      colorByPoint = TRUE
+    )) %>%
+  hc_title(
+    text = "Whether a later correction needed"
+  ) %>%
+  hc_xAxis(
+    title = list(text = "")) %>% 
+  hc_yAxis(
+    title = list(text = "Number of Observation")) %>%
+    hc_subtitle(
+    text = "There are 28 observations that need manually correct later on. 
+    Excluding them, we've coded 1176 data points in total."
+  ) %>%
+  hc_credits(enabled = TRUE, 
+             text = "Data Source: Data Collected From Google Form",
+             style = list(fontSize = "10px"))
+```
+
