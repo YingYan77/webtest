@@ -1,4 +1,5 @@
 name: "TOSCO 2.0 Current Coding Progress Overview"
+output_dir: docs
 navbar:
   title: "TOSCO 2.0 Coding Progress"
   left:
